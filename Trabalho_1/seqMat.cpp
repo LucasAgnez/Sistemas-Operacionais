@@ -2,6 +2,49 @@
 
 using namespace std;
 
+
+int** loadMatrixFile(int** M, string filename, int* R, int* C){
+	ifstream file;
+	string line;
+	string discard;
+	int count;
+	filename = "resources/basic_matrixes/" +filename + ".txt";
+	file.open(filename); //load file into M
+	if (!file) {
+		cerr << "Couldn't open file " << filename << endl;
+		exit(-1);
+	}
+	count = 0;
+	while(getline(file, line)){
+		if (line.size() == 0) {
+			continue;
+		}
+		if(line.find("p")!= string::npos){
+			stringstream stream(line);
+			stream >> discard;  //discard dimensions index and load them into R and C
+			stream >> *R;
+			stream >> *C;
+			M = new int*[*R];
+			for(int i = 0; i < *R; i++){
+				M[i] = new int[*C];
+				for(int j = 0; j < *C; j++){
+					M[i][j] = 0; //initializing Matrix
+				}
+			}
+			continue;
+		}
+		if(line.find("d")!= string::npos){
+			stringstream stream(line);
+			stream >> discard;
+			for(int i = 0; i < *C; i++) {   
+				stream >> M[count][i]; //loading into M1
+			}
+			count++;
+		}
+	}
+	file.close();
+}
+
 int** multMat(int** M1, int** M2, int R1, int C1, int R2, int C2){
 	if (C1 != R2){ //check if multiplication is possible
 		cout << "ERROR: Invalid matrix" << endl;
@@ -27,103 +70,10 @@ int** multMat(int** M1, int** M2, int R1, int C1, int R2, int C2){
 	return M3;
 }
 
-int main(int argc, char **argv){
-	if(argc != 3){ // check arguments
-		cout << "USAGE: ./seqMat <fileM1> <fileM2>" << endl;
-		return 1;
-	}
-	string filename1, filename2;
-	stringstream s;
-	ifstream file;
-	string line;
-	string discard;
-	int R1, C1, R2, C2;
-	int **M1, **M2;
-	int count;
-	s << argv[1] << " " << argv[2];
-	s >> filename1 >> filename2;
-	filename1 = "resources/basic_matrixes/" +filename1 + ".txt";
-	filename2 = "resources/basic_matrixes/" +filename2 + ".txt";
-	file.open(filename1); //load first file into M1
-	if (!file) {
-		cerr << "Couldn't open file " << filename1 << endl;
-		exit(-1);
-	}
-	count = 0;
-	while(getline(file, line)){
-		if (line.size() == 0) {
-			continue;
-		}
-		if(line.find("p")!= string::npos){
-			stringstream stream(line);
-			stream >> discard;  //discard dimensions index and load them into R1 and C1
-			stream >> R1;
-			stream >> C1;
-			M1 = new int*[R1];
-			for(int i = 0; i < R1; i++){
-				M1[i] = new int[C1];
-				for(int j = 0; j < C1; j++){
-					M1[i][j] = 0; //initializing M1
-				}
-			}
-			continue;
-		}
-		if(line.find("d")!= string::npos){
-			stringstream stream(line);
-			stream >> discard;
-			for(int i = 0; i < C1; i++) {   
-				stream >> M1[count][i]; //loading into M1
-			}
-			count++;
-		}
-	}
-	file.close();
-	file.open(filename2);  //load the second file into M2
-	if (!file) {
-		cerr << "Couldn't open file " << filename2 << endl;
-		exit(-1); 
-	}
-
-	count = 0;
-	while(getline(file, line)){
-		if (line.size() == 0) {
-			continue; //skip empty lines
-		}
-		if(line.find("p")!= string::npos){
-			stringstream stream(line);
-			stream >> discard; //discard dimensions index and load them into R2 and C2
-			stream >> R2;
-			stream >> C2;
-			M2 = new int*[R2];
-			for(int i = 0; i < R2; i++){
-				M2[i] = new int[C2];
-				for(int j = 0; j < C2; j++){
-					M2[i][j] = 0; //initializing M2				
-				}
-			}
-			continue;
-		}
-		if(line.find("d")!= string::npos){
-			stringstream stream(line);
-			stream >> discard;
-			for(int i = 0; i < C2; i++) {   
-				stream >> M2[count][i]; //loading into M2
-			}
-			count++;
-		}
-	}
-	file.close();
-	auto begin = chrono::high_resolution_clock::now();
-	ios_base::sync_with_stdio(false);
-
-	int **M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
-	if(M3==NULL){
-		exit(-1); // check for error
-	}
-	auto end = chrono::high_resolution_clock::now();
-	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
+void printMatrixFile(int **M, int R, int C, int time){
 	int fileCounter = 1; // counter for the name of the file
 	string filename;
+	int count = 1;
 	while(count < 10){ // max number of files
 		fstream file;
 		filename = "resources/sequential/S" + to_string(fileCounter) + ".txt";
@@ -131,10 +81,10 @@ int main(int argc, char **argv){
 		file.open(filename);
       	if (!file){ // create and print M3 onto the file
 			file.open(filename,  fstream::in | fstream::out | fstream::trunc);
-			file << R1 << " " << C2 << endl;
-			for(int i = 0; i < R1; i++){
-				for(int j = 0; j < C2; j++){
-					file  << "C" << i << j << " " <<  M3[i][j] << endl;
+			file << R << " " << C << endl;
+			for(int i = 0; i < R; i++){
+				for(int j = 0; j < C; j++){
+					file  << "C" << i << j << " " <<  M[i][j] << endl;
 				}
 			}
     		file << fixed << time << setprecision(9); 
@@ -143,6 +93,43 @@ int main(int argc, char **argv){
 			break;
     	}
 	}
+}
+
+
+int main(int argc, char **argv){
+	if(argc != 3){ // check arguments
+		cout << "USAGE: ./seqMat <fileM1> <fileM2>" << endl;
+		return 1;
+	}
+
+	string filename1, filename2;
+	stringstream s;
+
+	s << argv[1] << " " << argv[2];
+	s >> filename1 >> filename2;
 	
+	int **M1;
+	int *R1, *C1;
+	loadMatrixFile(M1, filename1, R1, C1);
+
+	int **M2;
+	int *R2, *C2;
+	loadMatrixFile(M2, filename1, R2, C2);
+
+
+	auto begin = chrono::high_resolution_clock::now();
+	ios_base::sync_with_stdio(false);
+
+	int **M3 = multMat(M1, M2, *R1, *C1, *R2, *C2); // load the multiplication into M3
+	if(M3==NULL){
+		exit(-1); // check for error
+	}
+
+	auto end = chrono::high_resolution_clock::now();
+	
+	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
+	
+	printMatrixFile(M3, *R1, *C2, time);
+
 	return 0;
 }
