@@ -2,15 +2,16 @@
 
 using namespace std;
 
-void createRandMatrix(int **M, int R, int C){
+void createRandMatrix(int **&M, int R, int C){
 	srand( (unsigned)time(NULL) );
+	M = new int*[R];
 	for(int i = 0; i < R; i++){
+		M[i] = new int[C];
 		for(int j = 0; j < C; j++){
 			M[i][j] = rand() % 1000; //initializing M1 with random values
 		}
 	}
 }
-
 void printMatrixFile(int **M, int R, int C){
 	int count = 1;
 	string filename;
@@ -47,17 +48,12 @@ int main(int argc, char **argv){
 	s << argv[1] << " " << argv[2] << " " << argv[3] << " "  << argv[4];
 	s >> RowsM1 >> ColsM1 >> RowsM2 >> ColsM2; //load arguments
 
-	int** M1 = new int*[RowsM1];
-	for(int i = 0; i < RowsM1; i++){
-		M1[i] = new int[ColsM1];
-	}
+	int** M1;
 	createRandMatrix(M1, RowsM1, ColsM1);
+
 	printMatrixFile(M1, RowsM1, ColsM1);
 
-	int** M2 = new int*[RowsM2];
-	for(int i = 0; i < RowsM2; i++){
-		M2[i] = new int[ColsM2];
-	}
+	int** M2;
 	createRandMatrix(M2, RowsM2, ColsM2);
 	printMatrixFile(M2, RowsM2, ColsM2);
 	
