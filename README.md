@@ -3,8 +3,8 @@ Repositório para o a disciplina de Sistemas Operacionais ministrada por Gustavo
 
 ## Modo de uso:
 compilação:
-    g++ -o createMat createMat.cpp
-    g++ -o seqMat seqMat.cpp
+    `g++ -o createMat createMat.cpp`
+    `g++ -o seqMat seqMat.cpp`
     
 
 uso:   
