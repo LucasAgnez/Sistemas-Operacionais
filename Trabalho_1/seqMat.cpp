@@ -113,11 +113,15 @@ int main(int argc, char **argv){
 		}
 	}
 	file.close();
+	auto begin = chrono::high_resolution_clock::now();
+	ios_base::sync_with_stdio(false);
 
 	int **M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
 	if(M3==NULL){
 		exit(-1); // check for error
 	}
+	auto end = chrono::high_resolution_clock::now();
+	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
 	int fileCounter = 1; // counter for the name of the file
 	string filename;
 	while(count < 10){ // max number of files
@@ -133,6 +137,8 @@ int main(int argc, char **argv){
 					file  << "C" << i << j << " " <<  M3[i][j] << endl;
 				}
 			}
+    		file << fixed << time << setprecision(9); 
+			file << "ns";
 			file.close();
 			break;
     	}
