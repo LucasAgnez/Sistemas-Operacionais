@@ -1,6 +1,0 @@
-0000000000000000000000000000000000000000 71087086afadc2e8032585a5d313d35b64c09a64 LucasAgnez <lucasagnez@hotmail.com> 1661904440 -0300	commit (initial): first commit
-71087086afadc2e8032585a5d313d35b64c09a64 d815c5120e39cd93cc04976474fd87b6d99a0216 LucasAgnez <lucasagnez@hotmail.com> 1661904955 -0300	pull https://github.com/LucasAgnez/Sistemas-Operacionais.git (start): checkout d815c5120e39cd93cc04976474fd87b6d99a0216
-d815c5120e39cd93cc04976474fd87b6d99a0216 bbdf368cf559e342627bbffdeafc3e09b8445d2b LucasAgnez <lucasagnez@hotmail.com> 1661904955 -0300	pull https://github.com/LucasAgnez/Sistemas-Operacionais.git (pick): first commit
-bbdf368cf559e342627bbffdeafc3e09b8445d2b bbdf368cf559e342627bbffdeafc3e09b8445d2b LucasAgnez <lucasagnez@hotmail.com> 1661904955 -0300	pull https://github.com/LucasAgnez/Sistemas-Operacionais.git (finish): returning to refs/heads/main
-bbdf368cf559e342627bbffdeafc3e09b8445d2b 488f32af88031f2779fc3c96430711d20d0078b8 LucasAgnez <lucasagnez@hotmail.com> 1661905058 -0300	commit: add gitignore
-488f32af88031f2779fc3c96430711d20d0078b8 c01ace6febac71498a3fba5e73d1e915073a1f9c LucasAgnez <lucasagnez@hotmail.com> 1661905146 -0300	commit: add gitignore
