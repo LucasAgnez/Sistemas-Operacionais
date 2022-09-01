@@ -1,5 +1,7 @@
 #include<bits/stdc++.h>
 
+#define MAXFILES 10
+
 using namespace std;
 
 void createRandMatrix(int **&M, int R, int C){
@@ -15,7 +17,7 @@ void createRandMatrix(int **&M, int R, int C){
 void printMatrixFile(int **M, int R, int C){
 	int count = 1;
 	string filename;
-	while(count < 5){
+	while(count < MAXFILES){
 		fstream file;
 		filename = "resources/basic_matrixes/M" + to_string(count) + ".txt"; //add filepath and extension
 		count++;	
