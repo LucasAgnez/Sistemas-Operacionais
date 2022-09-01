@@ -1,9 +1,10 @@
 #include<bits/stdc++.h>
 
+#define MAX_FILES 10
+
 using namespace std;
 
-
-int** loadMatrixFile(int** M, string filename, int* R, int* C){
+void loadMatrixFile(int **&M, string filename, int &R, int &C){
 	ifstream file;
 	string line;
 	string discard;
@@ -22,12 +23,12 @@ int** loadMatrixFile(int** M, string filename, int* R, int* C){
 		if(line.find("p")!= string::npos){
 			stringstream stream(line);
 			stream >> discard;  //discard dimensions index and load them into R and C
-			stream >> *R;
-			stream >> *C;
-			M = new int*[*R];
-			for(int i = 0; i < *R; i++){
-				M[i] = new int[*C];
-				for(int j = 0; j < *C; j++){
+			stream >> R;
+			stream >> C;
+			M = new int*[R];
+			for(int i = 0; i < R; i++){
+				M[i] = new int[C];
+				for(int j = 0; j < C; j++){
 					M[i][j] = 0; //initializing Matrix
 				}
 			}
@@ -36,7 +37,7 @@ int** loadMatrixFile(int** M, string filename, int* R, int* C){
 		if(line.find("d")!= string::npos){
 			stringstream stream(line);
 			stream >> discard;
-			for(int i = 0; i < *C; i++) {   
+			for(int i = 0; i < C; i++) {   
 				stream >> M[count][i]; //loading into M1
 			}
 			count++;
@@ -74,7 +75,7 @@ void printMatrixFile(int **M, int R, int C, int time){
 	int fileCounter = 1; // counter for the name of the file
 	string filename;
 	int count = 1;
-	while(count < 10){ // max number of files
+	while(count < MAX_FILES){ // max number of files
 		fstream file;
 		filename = "resources/sequential/S" + to_string(fileCounter) + ".txt";
 		fileCounter++;	
@@ -109,27 +110,26 @@ int main(int argc, char **argv){
 	s >> filename1 >> filename2;
 	
 	int **M1;
-	int *R1, *C1;
+	int R1, C1;
 	loadMatrixFile(M1, filename1, R1, C1);
 
 	int **M2;
-	int *R2, *C2;
-	loadMatrixFile(M2, filename1, R2, C2);
-
+	int R2, C2;
+	loadMatrixFile(M2, filename2, R2, C2);
 
 	auto begin = chrono::high_resolution_clock::now();
 	ios_base::sync_with_stdio(false);
 
-	int **M3 = multMat(M1, M2, *R1, *C1, *R2, *C2); // load the multiplication into M3
+	int **M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
 	if(M3==NULL){
 		exit(-1); // check for error
 	}
 
 	auto end = chrono::high_resolution_clock::now();
 	
-	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
+	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count(); // measure duration
 	
-	printMatrixFile(M3, *R1, *C2, time);
+	printMatrixFile(M3, R1, C2, time);
 
 	return 0;
 }
