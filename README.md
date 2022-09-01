@@ -7,13 +7,15 @@ Repositório para o a disciplina de Sistemas Operacionais ministrada por Gustavo
 ## Modo de uso:
 
 compilação:
-    `g++ -o createMat createMat.cpp`
-    `g++ -o seqMat seqMat.cpp`
-    
+	` g++ -o createMat createMat.cpp `
+	` g++ -o seqMat seqMat.cpp `
+	` g++ -o procMat procMat.cpp `
+	
 
 uso:   
-    ` ./createMat <R1> <C1> <R2> <C2> `
-    ` ./seqMat <arquivo1> <arquivo2> `
+	` ./createMat <R1> <C1> <R2> <C2> `
+	` ./seqMat <arquivo1> <arquivo2> `
+	` ./procMat <arquivo1> <arquivo2> <P> `
 
 
 ### Os arquivos gerados e que podem ser lidos são os encontrados no diretório "resources/basic_matrixes". não é necessário colocar o caminho do arquivo nem a extensão para ler
