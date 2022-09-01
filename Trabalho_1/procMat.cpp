@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 
-#define MAX_FILES 20
+#define MAX_FILES 100
 
 using namespace std;
 
@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
     string filename1, filename2;
 	stringstream s;
 
-	s << argv[1] << " " << argv[2];
+	s << argv[1] << " " << argv[2] << " " << argv[3];
 	s >> filename1 >> filename2 >> P;
 	
 	int **M1;
