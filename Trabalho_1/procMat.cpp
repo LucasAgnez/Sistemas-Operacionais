@@ -52,7 +52,7 @@ void printMatrixFile(int **M, int R, int C, int time){
 	int count = 1;
 	while(count < MAX_FILES){ // max number of files
 		fstream file;
-		filename = "resources/sequential/S" + to_string(fileCounter) + ".txt";
+		filename = "resources/process/P" + to_string(fileCounter) + ".txt";
 		fileCounter++;	
 		file.open(filename);
       	if (!file){ // create and print M3 onto the file
