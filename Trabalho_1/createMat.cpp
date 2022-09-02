@@ -38,13 +38,24 @@ void printMatrixFile(int **M, int R, int C){
 	}
 }
 
-
+bool isNumber(string str) {
+   for (int i = 0; i < str.length(); i++)
+   if (isdigit(str[i]) == false)
+      return false;
+	return true;
+}
 
 int main(int argc, char **argv){
 	if(argc != 5){ //check arguments
 		cout << "USAGE: ./createMat <RowsM1> <ColsM1> <RowsM2> <ColsM2>" << endl;
 		return 1;
 	}
+
+	if(!isNumber(argv[1]) || !isNumber(argv[2]) || !isNumber(argv[3]) || !isNumber(argv[4])){
+		cout << "ERROR: Invalid number" << endl;
+		exit(-1);
+	}
+
 	int RowsM1, RowsM2, ColsM1, ColsM2;
 	stringstream s;
 	s << argv[1] << " " << argv[2] << " " << argv[3] << " "  << argv[4];
