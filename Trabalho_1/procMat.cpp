@@ -115,20 +115,20 @@ void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
 }
 
 bool isNumber(string str) {
-   for (int i = 0; i < str.length(); i++)
-   if (isdigit(str[i]) == false)
-      return false;
+	for (int i = 0; i < str.length(); i++)
+	if (!isdigit(str[i]))
+		return false;
 	return true;
 }
 
 int main(int argc, char **argv){
     if(argc != 4){ // check arguments
-		cout << "USAGE: ./procMat <fileM1> <fileM2> <N>" << endl;
+		cerr << "USAGE: ./procMat <fileM1> <fileM2> <N>" << endl;
 		return 1;
 	}
 
 	if(!isNumber(argv[3])){
-		cout << "ERROR: Invalid number" << endl;
+		cerr << "ERROR: Invalid number" << endl;
 		exit(-1);
 	}
 
@@ -152,7 +152,9 @@ int main(int argc, char **argv){
 		cout << "ERROR: Invalid matrix" << endl;
 		return 0;
 	}
+
 	int n = R2;
+
 	openProcess(M1, M2, R1, n, C2, P);
 
 	return 0;

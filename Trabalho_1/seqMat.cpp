@@ -80,7 +80,7 @@ void printMatrixFile(int **M, int R, int C, int time){
 		filename = "resources/sequential/S" + to_string(fileCounter) + ".txt";
 		fileCounter++;	
 		file.open(filename);
-      	if (!file){ // create and print M3 onto the file
+	  	if (!file){ // create and print M3 onto the file
 			file.open(filename,  fstream::in | fstream::out | fstream::trunc);
 			file << R << " " << C << endl;
 			for(int i = 0; i < R; i++){
@@ -88,18 +88,18 @@ void printMatrixFile(int **M, int R, int C, int time){
 					file  << "C" << i << j << " " <<  M[i][j] << endl;
 				}
 			}
-    		file << fixed << time << setprecision(9); 
+			file << fixed << time << setprecision(9); 
 			file << "ns";
 			file.close();
 			break;
-    	}
+		}
 	}
 }
 
 
 int main(int argc, char **argv){
 	if(argc != 3){ // check arguments
-		cout << "USAGE: ./seqMat <fileM1> <fileM2>" << endl;
+		cerr << "USAGE: ./seqMat <fileM1> <fileM2>" << endl;
 		return 1;
 	}
 

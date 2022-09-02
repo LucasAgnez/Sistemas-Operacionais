@@ -22,7 +22,7 @@ void printMatrixFile(int **M, int R, int C){
 		filename = "resources/basic_matrixes/M" + to_string(count) + ".txt"; //add filepath and extension
 		count++;	
 		file.open(filename);
-      	if (!file){ 
+	  	if (!file){ 
 			file.open(filename, fstream::out);
 			file << "p " << R << " " << C << endl;
 			for(int i = 0; i < R; i++){
@@ -34,25 +34,25 @@ void printMatrixFile(int **M, int R, int C){
 			}
 			file.close();
 			break;
-    	}
+		}
 	}
 }
 
 bool isNumber(string str) {
-   for (int i = 0; i < str.length(); i++)
-   if (isdigit(str[i]) == false)
-      return false;
+	for (int i = 0; i < str.length(); i++)
+	if (!isdigit(str[i]))
+		return false;
 	return true;
 }
 
 int main(int argc, char **argv){
 	if(argc != 5){ //check arguments
-		cout << "USAGE: ./createMat <RowsM1> <ColsM1> <RowsM2> <ColsM2>" << endl;
+		cerr << "USAGE: ./createMat <RowsM1> <ColsM1> <RowsM2> <ColsM2>" << endl;
 		return 1;
 	}
 
 	if(!isNumber(argv[1]) || !isNumber(argv[2]) || !isNumber(argv[3]) || !isNumber(argv[4])){
-		cout << "ERROR: Invalid number" << endl;
+		cerr << "ERROR: Invalid number" << endl;
 		exit(-1);
 	}
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv){
 
 	int** M2;
 	createRandMatrix(M2, RowsM2, ColsM2);
-	printMatrixFile(M2, RowsM2, ColsM2);
 	
+	printMatrixFile(M2, RowsM2, ColsM2);
 	
 	return 0;
 }
