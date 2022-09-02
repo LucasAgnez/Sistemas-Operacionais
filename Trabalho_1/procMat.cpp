@@ -1,23 +1,23 @@
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include <fstream>
-#include <cmath>
-#include <string>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sstream>
+#include<iostream>
+#include<chrono>
+#include<vector>
+#include<fstream>
+#include<cmath>
+#include<string>
+#include<unistd.h>
+#include<sys/wait.h>
+#include<sys/types.h>
+#include<stdio.h>
+#include<sstream>
+#include<iomanip>
+#include<vector>
 
 #define MAX_FILES 100
 
 using namespace std;
 
-chrono::system_clock::time_point start;
 
-void loadMatrixFile(int **&M, string filename, int &R, int &C){
+void loadMatrixFile(vector<vector<int>>&M, string filename, int &R, int &C){
 	ifstream file;
 	string line;
 	string discard;
@@ -38,13 +38,8 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 			stream >> discard;  //discard dimensions index and load them into R and C
 			stream >> R;
 			stream >> C;
-			M = new int*[R];
-			for(int i = 0; i < R; i++){
-				M[i] = new int[C];
-				for(int j = 0; j < C; j++){
-					M[i][j] = 0; //initializing Matrix
-				}
-			}
+			vector<vector<int>> M1(R, vector<int>(C));
+			M = M1;
 			continue;
 		}
 		if(line.find("d")!= string::npos){
@@ -59,7 +54,8 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 	file.close();
 }
 
-void matMult(int **M1, int **M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
+void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
+	auto start = chrono::high_resolution_clock::now();
 	int counter = 1, sum, auxC;
 	ofstream file;
 	string filename = "resources/process/P" + to_string(fileCounter) + ".txt";
@@ -86,12 +82,15 @@ void matMult(int **M1, int **M2, int fileCounter, int R, int n, int C, int R0, i
                 counter++;
             }
 		}
-		chrono::system_clock::time_point end = chrono::system_clock::now();
-		file << chrono::duration_cast<chrono::nanoseconds> (end- start).count() << "ns" << "\n";
+		auto end = chrono::high_resolution_clock::now();
+		auto time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+		file << fixed << time << setprecision(9);
+		file << "ns";
+		file.close();
 	}
 }
 
-void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
+void openProcess(vector<vector<int>> M1, vector<vector<int>> M2, int R1, int n, int C2, int P){
 	int num_files = ceil(((double)(R1*C2))/P);
 	string filename;
 	pid_t process[num_files];
@@ -104,7 +103,6 @@ void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
 		Cf = P*(i+1)%R1;
 		process[i] = fork();
 		if(process[i] == 0){
-			start = std::chrono::system_clock::now();
 			matMult(M1, M2, i, R1, n, C2, R0, Rf, C0, Cf);
 			exit(0);
 		}
@@ -140,11 +138,11 @@ int main(int argc, char **argv){
 	s >> filename1 >> filename2 >> P;
 
 
-	int **M1;
+	vector<vector<int>> M1;
 	int R1, C1;
 	loadMatrixFile(M1, filename1, R1, C1);
 
-	int **M2;
+	vector<vector<int>> M2;
 	int R2, C2;
 	loadMatrixFile(M2, filename2, R2, C2);
 

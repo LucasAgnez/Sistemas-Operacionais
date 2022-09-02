@@ -4,17 +4,15 @@
 
 using namespace std;
 
-void createRandMatrix(int **&M, int R, int C){
+void createRandMatrix(vector<vector<int>>&M, int R, int C){
 	srand( (unsigned)time(NULL) );
-	M = new int*[R];
 	for(int i = 0; i < R; i++){
-		M[i] = new int[C];
 		for(int j = 0; j < C; j++){
 			M[i][j] = rand() % 1000; //initializing M1 with random values
 		}
 	}
 }
-void printMatrixFile(int **M, int R, int C){
+void printMatrixFile(vector<vector<int>>M, int R, int C){
 	int count = 1;
 	string filename;
 	while(count < MAXFILES){
@@ -61,12 +59,12 @@ int main(int argc, char **argv){
 	s << argv[1] << " " << argv[2] << " " << argv[3] << " "  << argv[4];
 	s >> RowsM1 >> ColsM1 >> RowsM2 >> ColsM2; //load arguments
 
-	int** M1;
+	vector<vector<int>> M1(RowsM1, vector<int>(ColsM1));
 	createRandMatrix(M1, RowsM1, ColsM1);
 
 	printMatrixFile(M1, RowsM1, ColsM1);
 
-	int** M2;
+	vector<vector<int>> M2(RowsM2, vector<int>(ColsM2));
 	createRandMatrix(M2, RowsM2, ColsM2);
 	
 	printMatrixFile(M2, RowsM2, ColsM2);

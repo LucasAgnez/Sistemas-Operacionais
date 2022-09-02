@@ -1,10 +1,16 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<sstream>
+#include<string>
+#include<fstream>
+#include<chrono>
+#include<iomanip>
+#include<vector>
 
 #define MAX_FILES 20
 
 using namespace std;
 
-void loadMatrixFile(int **&M, string filename, int &R, int &C){
+void loadMatrixFile(vector<vector<int>>&M, string filename, int &R, int &C){
 	ifstream file;
 	string line;
 	string discard;
@@ -25,13 +31,8 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 			stream >> discard;  //discard dimensions index and load them into R and C
 			stream >> R;
 			stream >> C;
-			M = new int*[R];
-			for(int i = 0; i < R; i++){
-				M[i] = new int[C];
-				for(int j = 0; j < C; j++){
-					M[i][j] = 0; //initializing Matrix
-				}
-			}
+			vector<vector<int>> M1(R, vector<int>(C));
+			M = M1;
 			continue;
 		}
 		if(line.find("d")!= string::npos){
@@ -46,18 +47,9 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 	file.close();
 }
 
-int** multMat(int** M1, int** M2, int R1, int C1, int R2, int C2){
-	if (C1 != R2){ //check if multiplication is possible
-		cout << "ERROR: Invalid matrix" << endl;
-		return NULL;
-	}
-	int** M3 = new int*[R1];
-	for(int i = 0; i < R1; i++){ // create new matrix
-		M3[i] = new int[C2];
-		for(int j = 0; j < C2; j++){
-			M3[i][j] = 0;
-		}
-	}
+vector<vector<int>> multMat(vector<vector<int>> M1, vector<vector<int>> M2, int R1, int C1, int R2, int C2){
+
+	vector<vector<int>> M3(R1, vector<int>(C2));
 	
 	for (int i = 0; i < R1; i++){ //perform multiplication
 		for (int j = 0; j < C2; j++){
@@ -71,7 +63,7 @@ int** multMat(int** M1, int** M2, int R1, int C1, int R2, int C2){
 	return M3;
 }
 
-void printMatrixFile(int **M, int R, int C, int time){
+void printMatrixFile(vector<vector<int>> M, int R, int C, int time){
 	int fileCounter = 1; // counter for the name of the file
 	string filename;
 	int count = 1;
@@ -109,25 +101,27 @@ int main(int argc, char **argv){
 	s << argv[1] << " " << argv[2];
 	s >> filename1 >> filename2;
 	
-	int **M1;
+	vector<vector<int>> M1;
 	int R1, C1;
 	loadMatrixFile(M1, filename1, R1, C1);
 
-	int **M2;
+	vector<vector<int>> M2;
 	int R2, C2;
 	loadMatrixFile(M2, filename2, R2, C2);
 
-	auto begin = chrono::high_resolution_clock::now();
+	if (C1 != R2){ //check if multiplication is possible
+		cout << "ERROR: Invalid matrix" << endl;
+		return 1;
+	}
+
+	auto start = chrono::high_resolution_clock::now();
 	ios_base::sync_with_stdio(false);
 
-	int **M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
-	if(M3==NULL){
-		exit(-1); // check for error
-	}
+	vector<vector<int>> M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
 
 	auto end = chrono::high_resolution_clock::now();
 	
-	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count(); // measure duration
+	int time = chrono::duration_cast<chrono::nanoseconds>(end - start).count(); // measure duration
 	
 	printMatrixFile(M3, R1, C2, time);
 
