@@ -1,8 +1,21 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <chrono>
+#include <vector>
+#include <fstream>
+#include <cmath>
+#include <string>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sstream>
 
 #define MAX_FILES 100
 
 using namespace std;
+
+chrono::system_clock::time_point start;
 
 void loadMatrixFile(int **&M, string filename, int &R, int &C){
 	ifstream file;
@@ -46,37 +59,66 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 	file.close();
 }
 
-void printMatrixFile(int **M, int R, int C, int time){
-	int fileCounter = 1; // counter for the name of the file
-	string filename;
-	int count = 1;
-	while(count < MAX_FILES){ // max number of files
-		fstream file;
-		filename = "resources/process/P" + to_string(fileCounter) + ".txt";
-		fileCounter++;	
-		file.open(filename);
-      	if (!file){ // create and print M3 onto the file
-			file.open(filename,  fstream::in | fstream::out | fstream::trunc);
-			file << R << " " << C << endl;
-			for(int i = 0; i < R; i++){
-				for(int j = 0; j < C; j++){
-					file  << "C" << i << j << " " <<  M[i][j] << endl;
+void matMult(int **M1, int **M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
+	int counter = 1, sum = 0, auxC = 0, auxR;
+	ofstream file;
+	string filename = "resources/process/P" + to_string(fileCounter) + ".txt";
+	file.open(filename);
+	if (file.is_open()) {
+		file << R << " " << C << endl;
+		if(R0 != Rf){
+			auxC = Cf;
+			Cf = C;
+		}
+		for(int i = R0; i < Rf; i++){
+			for(int j = C0; j < Cf; j++){
+				sum = 0;
+				for(int k = 0; k < n; k++){
+					sum += M1[i][k]*M2[k][j];					
 				}
+				file << sum << endl;
 			}
-    		file << fixed << time << setprecision(9); 
-			file << "ns";
-			file.close();
-			break;
-    	}
+			if(R0 != Rf){
+				C0 = 0;
+				if (Rf - R0 == counter){
+					Cf == auxC;
+				}
+				counter++;
+			}
+		}
+		chrono::system_clock::time_point end = chrono::system_clock::now();
+		file << chrono::duration_cast<chrono::nanoseconds> (end- start).count() << "ns" << "\n";
 	}
 }
 
-int** multMat(int** M1, int** M2, int R1, int C1, int R2, int C2){
- // TODO
- return M1;
+void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
+	int num_files = ceil(((double)(R1*C2))/P);
+	string filename;
+	pid_t process[num_files];
+
+	int C0, Cf, R0, Rf;
+	for(int i = 0; i < num_files; i++){
+			R0 =  P*i/R1 ;
+			C0 = P*i % R1;
+			Rf = (((P-1) + P*i)/R1);
+			Cf = (((P-1) + P*i)%R1);
+		if(i+1 == num_files){
+			Rf = R1;
+			Cf = C2;
+		}
+		process[i] = fork();
+		if(process[i] == 0){
+			start = std::chrono::system_clock::now();
+			matMult(M1, M2, i, R1, n, C2, R0, Rf, C0, Cf);
+			exit(0);
+		}
+		else{
+			wait(NULL);
+		}
+	}
 }
-    
-int main(int argc, char **argv) {
+
+int main(int argc, char **argv){
     if(argc != 4){ // check arguments
 		cout << "USAGE: ./procMat <fileM1> <fileM2> <N>" << endl;
 		return 1;
@@ -87,7 +129,7 @@ int main(int argc, char **argv) {
 
 	s << argv[1] << " " << argv[2] << " " << argv[3];
 	s >> filename1 >> filename2 >> P;
-	
+
 	int **M1;
 	int R1, C1;
 	loadMatrixFile(M1, filename1, R1, C1);
@@ -96,18 +138,13 @@ int main(int argc, char **argv) {
 	int R2, C2;
 	loadMatrixFile(M2, filename2, R2, C2);
 
-	auto begin = chrono::high_resolution_clock::now();
-	ios_base::sync_with_stdio(false);
-
-	int **M3 = multMat(M1, M2, R1, C1, R2, C2); // load the multiplication into M3
-	if(M3==NULL){
-		exit(-1); // check for error
+	if (C1 != R2){ //check if multiplication is possible
+		cout << "ERROR: Invalid matrix" << endl;
+		return 0;
 	}
+	int n = R2;
+	openProcess(M1, M2, R1, n, C2, P);
 
-	auto end = chrono::high_resolution_clock::now();
-	
-	int time = chrono::duration_cast<chrono::nanoseconds>(end - begin).count(); // measure duration
-	
-	printMatrixFile(M3, R1, C2, time);
+	return 0;
 
 }
