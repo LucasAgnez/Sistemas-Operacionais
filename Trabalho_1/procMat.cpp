@@ -60,31 +60,31 @@ void loadMatrixFile(int **&M, string filename, int &R, int &C){
 }
 
 void matMult(int **M1, int **M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
-	int counter = 1, sum = 0, auxC = 0, auxR;
+	int counter = 1, sum, auxC;
 	ofstream file;
 	string filename = "resources/process/P" + to_string(fileCounter) + ".txt";
 	file.open(filename);
 	if (file.is_open()) {
 		file << R << " " << C << endl;
-		if(R0 != Rf){
-			auxC = Cf;
-			Cf = C;
-		}
+		if(Rf != R0){ 
+            auxC = Cf;
+            Cf = C; 
+        }  
 		for(int i = R0; i < Rf; i++){
 			for(int j = C0; j < Cf; j++){
 				sum = 0;
 				for(int k = 0; k < n; k++){
 					sum += M1[i][k]*M2[k][j];					
 				}
-				file << sum << endl;
+				file << "C" << i << j << " " << sum << endl;
 			}
 			if(R0 != Rf){
-				C0 = 0;
-				if (Rf - R0 == counter){
-					Cf == auxC;
-				}
-				counter++;
-			}
+                C0 = 0;
+                if((Rf - R0) == counter){
+                    Cf = auxC;
+                }
+                counter++;
+            }
 		}
 		chrono::system_clock::time_point end = chrono::system_clock::now();
 		file << chrono::duration_cast<chrono::nanoseconds> (end- start).count() << "ns" << "\n";
@@ -98,14 +98,10 @@ void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
 
 	int C0, Cf, R0, Rf;
 	for(int i = 0; i < num_files; i++){
-			R0 =  P*i/R1 ;
-			C0 = P*i % R1;
-			Rf = (((P-1) + P*i)/R1);
-			Cf = (((P-1) + P*i)%R1);
-		if(i+1 == num_files){
-			Rf = R1;
-			Cf = C2;
-		}
+		R0 = P*i/R1 ;
+		C0 = P*i % R1;
+		Rf = P*(i+1)/R1;
+		Cf = P*(i+1)%R1;
 		process[i] = fork();
 		if(process[i] == 0){
 			start = std::chrono::system_clock::now();
@@ -118,17 +114,31 @@ void openProcess(int** M1, int** M2, int R1, int n, int C2, int P){
 	}
 }
 
+bool isNumber(string str) {
+   for (int i = 0; i < str.length(); i++)
+   if (isdigit(str[i]) == false)
+      return false;
+	return true;
+}
+
 int main(int argc, char **argv){
     if(argc != 4){ // check arguments
 		cout << "USAGE: ./procMat <fileM1> <fileM2> <N>" << endl;
 		return 1;
 	}
+
+	if(!isNumber(argv[3])){
+		cout << "ERROR: Invalid number" << endl;
+		exit(-1);
+	}
+
     int P;
     string filename1, filename2;
 	stringstream s;
 
 	s << argv[1] << " " << argv[2] << " " << argv[3];
 	s >> filename1 >> filename2 >> P;
+
 
 	int **M1;
 	int R1, C1;
