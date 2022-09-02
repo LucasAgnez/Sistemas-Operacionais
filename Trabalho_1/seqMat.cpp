@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 
-#define MAX_FILES 10
+#define MAX_FILES 20
 
 using namespace std;
 
