@@ -56,7 +56,7 @@ void loadMatrixFile(vector<vector<int>>&M, string filename, int &R, int &C){
 
 void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
 	auto start = chrono::high_resolution_clock::now();
-	int counter = 1, sum, auxC;
+	int counter = 1, sum, auxC, auxR = Rf;
 	ofstream file;
 	string filename = "resources/process/P" + to_string(fileCounter) + ".txt";
 	file.open(filename);
@@ -64,15 +64,15 @@ void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, in
 		file << R << " " << C << endl;
 		if(Rf != R0){ 
             auxC = Cf;
-            Cf = C; 
-        }  
-		for(int i = R0; i < Rf; i++){
+            Cf = C;
+        }
+		for(int i = R0; i <= Rf; i++){
 			for(int j = C0; j < Cf; j++){
 				sum = 0;
 				for(int k = 0; k < n; k++){
 					sum += M1[i][k]*M2[k][j];					
 				}
-				file << "C" << i << j << " " << sum << endl;
+				file << "C" << i << "," << j << " " << sum << endl;
 			}
 			if(R0 != Rf){
                 C0 = 0;

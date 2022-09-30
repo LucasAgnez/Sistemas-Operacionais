@@ -77,7 +77,7 @@ void printMatrixFile(vector<vector<int>> M, int R, int C, int time){
 			file << R << " " << C << endl;
 			for(int i = 0; i < R; i++){
 				for(int j = 0; j < C; j++){
-					file  << "C" << i << j << " " <<  M[i][j] << endl;
+					file  << "C" << i << "," << j << " " <<  M[i][j] << endl;
 				}
 			}
 			file << fixed << time << setprecision(9); 
