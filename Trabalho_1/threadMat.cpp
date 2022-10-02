@@ -1,11 +1,11 @@
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <cmath>
-#include <thread>
-#include <string>
+#include<iostream>
+#include<chrono>
+#include<vector>
+#include<fstream>
+#include<sstream>
+#include<cmath>
+#include<thread>
+#include<string>
 #include<cmath>
 #include<unistd.h>
 #include<sys/wait.h>
@@ -92,7 +92,7 @@ void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, in
 
 void openThreads(vector<vector<int>> M1, vector<vector<int>> M2, int R, int n, int C, int P){
 	int num_files = ceil(((double)(R*C))/P);
-    std::vector<thread> threads;        // Vector de threads
+    std::vector<thread> threads;
 	string filename;
 
 	int C0, Cf, R0, Rf;
