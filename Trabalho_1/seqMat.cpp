@@ -81,7 +81,7 @@ void printMatrixFile(vector<vector<int>> M, int R, int C, int time){
 				}
 			}
 			file << fixed << time << setprecision(9); 
-			file << "ns";
+			file << "ms";
 			file.close();
 			break;
 		}
@@ -121,7 +121,7 @@ int main(int argc, char **argv){
 
 	auto end = chrono::high_resolution_clock::now();
 	
-	int time = chrono::duration_cast<chrono::nanoseconds>(end - start).count(); // measure duration
+	int time = chrono::duration_cast<chrono::milliseconds>(end - start).count(); // measure duration
 	
 	printMatrixFile(M3, R1, C2, time);
 

@@ -83,9 +83,9 @@ void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, in
             }
 		}
 		auto end = chrono::high_resolution_clock::now();
-		auto time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+		auto time = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 		file << fixed << time << setprecision(9);
-		file << "ns";
+		file << "ms";
 		file.close();
 	}
 }
