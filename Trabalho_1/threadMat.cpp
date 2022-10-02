@@ -1,21 +1,19 @@
-#include<iostream>
-#include<chrono>
-#include<vector>
-#include<fstream>
+#include <iostream>
+#include <chrono>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <cmath>
+#include <thread>
+#include <string>
 #include<cmath>
-#include<string>
 #include<unistd.h>
 #include<sys/wait.h>
 #include<sys/types.h>
 #include<stdio.h>
-#include<sstream>
 #include<iomanip>
-#include<vector>
-
-#define MAX_FILES 100
 
 using namespace std;
-
 
 void loadMatrixFile(vector<vector<int>>&M, string filename, int &R, int &C){
 	ifstream file;
@@ -54,11 +52,11 @@ void loadMatrixFile(vector<vector<int>>&M, string filename, int &R, int &C){
 	file.close();
 }
 
-void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, int R, int n, int C, int R0, int Rf, int C0, int Cf){
-	auto start = chrono::high_resolution_clock::now();
-	int counter = 1, sum, auxC;
-	ofstream file;
-	string filename = "resources/process/P" + to_string(fileCounter) + ".txt";
+void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, int R, int n, int C, int R0, int C0, int Rf, int Cf){ 
+    auto start = chrono::high_resolution_clock::now();
+    int counter = 1, sum, auxC;    
+    std::ofstream file;
+    string filename = "resources/threads/T" + to_string(fileCounter) + ".txt";
 	file.open(filename);
 	if (file.is_open()) {
 		file << R << " " << C << endl;
@@ -81,19 +79,21 @@ void matMult(vector<vector<int>> M1, vector<vector<int>> M2, int fileCounter, in
                 }
                 counter++;
             }
-		}
+		} 
 		auto end = chrono::high_resolution_clock::now();
 		auto time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
 		file << fixed << time << setprecision(9);
 		file << "ns";
 		file.close();
-	}
+    }
+	pthread_exit(NULL);
 }
 
-void openProcess(vector<vector<int>> M1, vector<vector<int>> M2, int R, int n, int C, int P){
+
+void openThreads(vector<vector<int>> M1, vector<vector<int>> M2, int R, int n, int C, int P){
 	int num_files = ceil(((double)(R*C))/P);
+    std::vector<thread> threads;        // Vector de threads
 	string filename;
-	pid_t process[num_files];
 
 	int C0, Cf, R0, Rf;
 	for(int i = 0; i < num_files; i++){
@@ -101,15 +101,12 @@ void openProcess(vector<vector<int>> M1, vector<vector<int>> M2, int R, int n, i
 		C0 = P*i % R;
 		Rf = P*(i+1)/R;
 		Cf = P*(i+1)%R;
-		process[i] = fork();
-		if(process[i] == 0){
-			matMult(M1, M2, i, R, n, C, R0, Rf, C0, Cf);
-			exit(0);
-		}
-		else{
-			wait(NULL);
-		}
+        threads.push_back(thread(matMult, M1, M2, i, R, n, C, R0, C0, Rf, Cf));
 	}
+
+    for(auto &thread : threads){ 
+        thread.join();
+    }
 }
 
 bool isNumber(string str) {
@@ -121,7 +118,7 @@ bool isNumber(string str) {
 
 int main(int argc, char **argv){
     if(argc != 4){ // check arguments
-		cerr << "USAGE: ./procMat <fileM1> <fileM2> <N>" << endl;
+		cerr << "USAGE: ./threadMat <fileM1> <fileM2> <N>" << endl;
 		return 1;
 	}
 
@@ -153,7 +150,7 @@ int main(int argc, char **argv){
 
 	int n = R2;
 
-	openProcess(M1, M2, R1, n, C2, P);
+	openThreads(M1, M2, R1, n, C2, P);
 
 	return 0;
 
