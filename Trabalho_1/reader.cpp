@@ -6,7 +6,7 @@
 
 using namespace std;
 typedef unsigned long long ull;
-//program that reads 8 files and prints the greater execution time...
+//program that reads N files and prints the greater execution time...
 
 ull greater_time = 0;
 
