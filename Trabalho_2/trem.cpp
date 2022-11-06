@@ -27,7 +27,7 @@ void Trem::run(){
         else{
             switch(ID){
                 case 1:     //Trem 1
-                    if(x==310 && y==30){
+                    if(x==450 && y==20){ //
                         deadlock3.tryAcquire(1);
                         while(deadlock3.available() == 0);
 
@@ -40,7 +40,7 @@ void Trem::run(){
                         mutexRegiao1.lock();
                     }
 
-                    if(x==310 && y==150){
+                    if(x==470 && y==140){ //
                         deadlock3.release(1);
                         deadLock1.release(1);
                         cruzamentoCritico1.release(1);
@@ -48,22 +48,22 @@ void Trem::run(){
                         mutexRegiao1.unlock();
                     }
 
-                    if(x==330 && y==130){
+                    if(x==330 && y==130){ //
                         mutexRegiao3.lock();
                     }
 
-                    if(x==160 && y==150){
+                    if(x==360 && y==160){ //
                         waitRegiao3.wakeAll();
                         mutexRegiao3.unlock();
                     }
 
-                    if (y == 30 && x < 330){
+                    if (x < 470 && y == 20){
                         x+=10;
                     }
-                    else if (x == 330 && y < 150){
+                    else if (x == 470 && y < 160){
                         y+=10;
                     }
-                    else if (x > 60 && y == 150){
+                    else if (x > 200 && y == 160){
                         x-=10;
                     }
                     else{
@@ -137,13 +137,13 @@ void Trem::run(){
                         cruzamentoCritico1.release(1);
                     }
 
-                    if (y == 30 && x < 600){
+                    if (x < 740 && y == 20){
                         x+=10;
                     }
-                    else if (x == 600 && y < 150){
+                    else if (x == 740 && y < 160){
                         y+=10;
                     }
-                    else if (x > 330 && y == 150){
+                    else if (x > 470 && y == 160){
                         x-=10;
                     }
                     else{
@@ -184,13 +184,13 @@ void Trem::run(){
                         mutexRegiao6.unlock();
                     }
 
-                    if (y == 30 && x < 870){
+                    if (x < 320 && y == 160){
                         x+=10;
                     }
-                    else if (x == 870 && y < 150){
+                    else if (x == 320 && y < 280){
                         y+=10;
                     }
-                    else if (x > 600 && y == 150){
+                    else if (x > 60 && y == 280){
                         x-=10;
                     }
                     else{
@@ -253,13 +253,13 @@ void Trem::run(){
                         cruzamentoCritico1.release(1);
                     }
 
-                    if (y == 150 && x < 475){
+                    if (x < 590 && y == 160){
                         x+=10;
                     }
-                    else if (x >= 475 && y < 270){
+                    else if (x == 590 && y < 280){
                         y+=10;
                     }
-                    else if (x > 205 && y == 270){
+                    else if (x > 320 && y == 280){
                         x-=10;
                     }
                     else{
@@ -315,13 +315,13 @@ void Trem::run(){
                         mutexRegiao5.unlock();
                     }
 
-                    if (y == 150 && x < 745){
+                    if (x < 860 && y == 160){
                         x+=10;
                     }
-                    else if (x == 745 && y < 270){
+                    else if (x == 860 && y < 280){
                         y+=10;
                     }
-                    else if (x > 475 && y == 270){
+                    else if (x > 590 && y == 280){
                         x-=10;
                     }
                     else{
