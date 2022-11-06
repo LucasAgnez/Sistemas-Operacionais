@@ -64,23 +64,23 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-void MainWindow::on_velocidade_t1_valueChanged(int valor){
-    trem1->aceleracao(valor);
+void MainWindow::slider_velocidade_t1(int valor){
+    trem1->set_velocidade(valor);
 }
 
-void MainWindow::on_velocidade_t2_valueChanged(int valor){
-    trem2->aceleracao(valor);
+void MainWindow::slider_velocidade_t2(int valor){
+    trem2->set_velocidade(valor);
 }
 
-void MainWindow::on_velocidade_t3_valueChanged(int valor){
-    trem3->aceleracao(valor);
+void MainWindow::slider_velocidade_t3(int valor){
+    trem3->set_velocidade(valor);
 }
 
-void MainWindow::on_velocidade_t4_valueChanged(int valor){
-    trem4->aceleracao(valor);
+void MainWindow::slider_velocidade_t4(int valor){
+    trem4->set_velocidade(valor);
 }
 
-void MainWindow::on_velocidade_t5_valueChanged(int valor){
-    trem5->aceleracao(valor);
+void MainWindow::slider_velocidade_t5(int valor){
+    trem5->set_velocidade(valor);
 }
 
