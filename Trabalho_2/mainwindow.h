@@ -21,15 +21,15 @@ public slots:
     void updateInterface(int,int,int);
 
 private slots:
-    void slider_velocidade_t1(int valor);
+    void on_velocidade1_valueChanged(int valor);
 
-    void slider_velocidade_t2(int valor);
+    void on_velocidade2_valueChanged(int valor);
 
-    void slider_velocidade_t3(int valor);
+    void on_velocidade3_valueChanged(int valor);
 
-    void slider_velocidade_t4(int valor);
+    void on_velocidade4_valueChanged(int valor);
 
-    void slider_velocidade_t5(int valor);
+    void on_velocidade5_valueChanged(int valor);
 
 private:
     Ui::MainWindow *ui;

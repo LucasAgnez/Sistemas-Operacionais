@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label_trem3">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>160</y>
+      <x>320</x>
+      <y>180</y>
       <width>21</width>
       <height>17</height>
      </rect>
@@ -43,7 +43,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>                              1</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho3S">
@@ -75,7 +75,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>5</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho3O">
@@ -107,7 +107,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>6</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho4N">
@@ -123,7 +123,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>    2                        3 </string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho4S">
@@ -145,8 +145,8 @@
    <widget class="QLabel" name="label_trem4">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>160</y>
+      <x>550</x>
+      <y>280</y>
       <width>21</width>
       <height>17</height>
      </rect>
@@ -171,7 +171,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>    4</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho5L">
@@ -235,7 +235,7 @@
      <string notr="true">QLabel { background: yellow}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho2L">
@@ -289,8 +289,8 @@
    <widget class="QLabel" name="label_trem5">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>160</y>
+      <x>860</x>
+      <y>270</y>
       <width>21</width>
       <height>17</height>
      </rect>
@@ -305,7 +305,7 @@
    <widget class="QLabel" name="label_trem1">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>450</x>
       <y>20</y>
       <width>21</width>
       <height>17</height>
@@ -322,7 +322,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>20</y>
+      <y>140</y>
       <width>20</width>
       <height>17</height>
      </rect>
@@ -334,7 +334,7 @@
      <string>T5</string>
     </property>
    </widget>
-   <widget class="QSlider" name="slider_velocidade_t3">
+   <widget class="QSlider" name="velocidade3">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -383,7 +383,7 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QSlider" name="slider_velocidade_t4">
+   <widget class="QSlider" name="velocidade4">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -417,7 +417,7 @@
      <enum>QSlider::NoTicks</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="slider_velocidade_t5">
+   <widget class="QSlider" name="velocidade5">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -451,7 +451,7 @@
      <enum>QSlider::NoTicks</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="slider_velocidade_t1">
+   <widget class="QSlider" name="velocidade1">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -482,7 +482,7 @@
      <enum>QSlider::NoTicks</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="slider_velocidade_t2">
+   <widget class="QSlider" name="velocidade2">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -528,11 +528,11 @@
    <zorder>label_trilho2L</zorder>
    <zorder>label_trilho1N</zorder>
    <zorder>label_trilho2N</zorder>
-   <zorder>slider_velocidade_t3</zorder>
-   <zorder>slider_velocidade_t4</zorder>
-   <zorder>slider_velocidade_t5</zorder>
-   <zorder>slider_velocidade_t1</zorder>
-   <zorder>slider_velocidade_t2</zorder>
+   <zorder>velocidade3</zorder>
+   <zorder>velocidade4</zorder>
+   <zorder>velocidade5</zorder>
+   <zorder>velocidade1</zorder>
+   <zorder>velocidade2</zorder>
    <zorder>label_trem3</zorder>
    <zorder>label_trem1</zorder>
    <zorder>label_trem5</zorder>
