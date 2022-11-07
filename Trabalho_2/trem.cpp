@@ -4,10 +4,9 @@
 #include <QMutex>
 #include <QWaitCondition>
 
-QSemaphore cruzamentoCritico1(2), cruzamentoCritico2(2), cruzamentoCritico3(2);
-QSemaphore deadLock1(3), deadlock2(3), deadlock3(4);
-QMutex mutexRegiao1, mutexRegiao2,mutexRegiao3, mutexRegiao4, mutexRegiao5, mutexRegiao6, mutexRegiao7;
-QWaitCondition waitRegiao1, waitRegiao2, waitRegiao3, waitRegiao4, waitRegiao5, waitRegiao6, waitRegiao7;
+QSemaphore deadlock0(3), deadlock1(3), deadlock2(3), deadlock3(4), deadLock4(3), deadlock5(3), deadlock6(4);
+QMutex mutex_regiao0, mutex_regiao1, mutex_regiao2, mutex_regiao3, mutex_regiao4, mutex_regiao5, mutex_regiao6;
+QWaitCondition wait_regiao0, wait_regiao1, wait_regiao2, wait_regiao3, wait_regiao4, wait_regiao5, wait_regiao6;
 
 //Construtor
 Trem::Trem(int ID, int x, int y){
@@ -28,36 +27,30 @@ void Trem::run(){
             switch(ID){
                 case 1:     //Trem 1
                     if(x==450 && y==20){ //
-                        deadlock3.tryAcquire(1);
-                        while(deadlock3.available() == 0);
 
-                        deadLock1.tryAcquire(1);
-                        while(deadLock1.available() == 0);
+                    }
 
-                        cruzamentoCritico1.tryAcquire(1);
-                        while(cruzamentoCritico1.available() == 0);
+                    if(x==450 && y==160){
 
-                        mutexRegiao1.lock();
+                    }
+
+                    if(x==340 && y==160){ //
+
+                    }
+
+                    if(x==200 && y==140){
+
                     }
 
                     if(x==470 && y==140){ //
-                        deadlock3.release(1);
-                        deadLock1.release(1);
-                        cruzamentoCritico1.release(1);
-                        waitRegiao1.wakeOne();
-                        mutexRegiao1.unlock();
+
                     }
 
-                    if(x==330 && y==130){ //
-                        mutexRegiao3.lock();
+                    if(x==300 && y==160){
+
                     }
 
-                    if(x==360 && y==160){ //
-                        waitRegiao3.wakeAll();
-                        mutexRegiao3.unlock();
-                    }
-
-                    if (x < 470 && y == 20){
+                    if (x < 470 && y == 20){ /////////
                         x+=10;
                     }
                     else if (x == 470 && y < 160){
@@ -74,70 +67,31 @@ void Trem::run(){
 
 
                 case 2: //Trem 2
-                    if(x==350 && y==30){
-                        waitRegiao1.wakeAll();
-                        mutexRegiao1.unlock();
+                    if(x==740 && y==140){ //
+
                     }
 
-                    if(x==350 && y==150){
-                        mutexRegiao1.lock();
+                    if(x==570 && y==160){
+
                     }
 
-                    if(x==580 && y==30){
-                        deadlock3.tryAcquire(1);
-                        while(deadlock3.available() == 0);
+                    if(x==610 && y==160){ //
 
-                        deadlock2.tryAcquire(1);
-                        while(deadlock2.available() == 0);
-
-                        cruzamentoCritico2.tryAcquire(1);
-                        while(cruzamentoCritico2.available() == 0);
-
-                        mutexRegiao2.lock();
                     }
 
-                    if(x==450 && y==150){
-                        deadlock3.release(1);
-                        deadlock2.release(1);
-                        cruzamentoCritico2.release(1);
-                        waitRegiao2.wakeAll();
-                        mutexRegiao2.unlock();
+                    if(x==570 && y==160){
+
                     }
 
-                    if(x==600 && y==130){
-                        deadLock1.tryAcquire(1);
-                        while(deadLock1.available() == 0);
+                    if(x==490 && y==160){ //
 
-                        cruzamentoCritico3.tryAcquire(1);
-                        while(cruzamentoCritico3.available() == 0);
-
-                        mutexRegiao5.lock();
                     }
 
-                    if(x == 430 && y == 150){
-                        deadLock1.release(1);
-                        cruzamentoCritico3.release(1);
-                        waitRegiao5.wakeAll();
-                        mutexRegiao5.unlock();
+                    if(x == 470 && y == 140){
+
                     }
 
-                    if(x==500 && y==150){
-                        cruzamentoCritico1.tryAcquire(1);
-                        while(cruzamentoCritico1.available() == 0);
-
-                        mutexRegiao4.lock();
-                    }
-
-                    if(x==330 && y==130){
-                        waitRegiao4.wakeAll();
-                        mutexRegiao4.unlock();
-                    }
-
-                    if(x==500 && y==30){
-                        cruzamentoCritico1.release(1);
-                    }
-
-                    if (x < 740 && y == 20){
+                    if (x < 740 && y == 20){ /////////////
                         x+=10;
                     }
                     else if (x == 740 && y < 160){
@@ -154,37 +108,23 @@ void Trem::run(){
 
 
                 case 3: //Trem 3
-                    if(x==620 && y==150){
-                        mutexRegiao2.lock();
+                    if(x==300 && y==160){ //
+
                     }
 
-                    if(x==620 && y==30){
-                        waitRegiao2.wakeAll();
-                        mutexRegiao2.unlock();
+                    if(x==300 && y==280){
+
                     }
 
-                    if(x==770 && y==150){
-                        deadlock3.tryAcquire(1);
-                        while(deadlock3.available() == 0);
+                    if(x==180 && y==160){ //
 
-                        deadlock2.tryAcquire(1);
-                        while(deadlock2.available() == 0);
-
-                        cruzamentoCritico2.tryAcquire(1);
-                        while(cruzamentoCritico2.available() == 0);
-
-                        mutexRegiao6.lock();
                     }
 
-                    if(x==600 && y==130){
-                        deadlock3.release(1);
-                        deadlock2.release(1);
-                        cruzamentoCritico2.release(1);
-                        waitRegiao6.wakeAll();
-                        mutexRegiao6.unlock();
+                    if(x==320 && y==180){
+
                     }
 
-                    if (x < 320 && y == 160){
+                    if (x < 320 && y == 160){ /////////
                         x+=10;
                     }
                     else if (x == 320 && y < 280){
@@ -201,59 +141,39 @@ void Trem::run(){
 
 
                 case 4: //Trem 4
-                    if(x==445 && y==150){
-                        mutexRegiao7.lock();
-                    }
-
-                    if(x==445 && y==270){
-                        waitRegiao7.wakeAll();
-                        mutexRegiao7.unlock();
-                    }
-
-                    if(x==305 && y==150){
-                        deadlock2.tryAcquire(1);
-                        while(deadlock2.available() == 0);
-
-                        cruzamentoCritico3.tryAcquire(1);
-                        while(cruzamentoCritico3.available() == 0);
-
-                        mutexRegiao4.lock();
+                    if(x==320 && y==180){ //
 
                     }
 
-                    if(x==475 && y==170){
-                        deadlock2.release(1);
-                        cruzamentoCritico3.release(1);
-                        waitRegiao4.wakeAll();
-                        mutexRegiao4.unlock();
-                    }
-
-                    if(x==205 && y==170){
-                        deadlock3.tryAcquire(1);
-                        while(deadlock3.available() == 0);
-
-                        deadLock1.tryAcquire(1);
-                        while(deadLock1.available() == 0);
-
-                        cruzamentoCritico1.tryAcquire(1);
-                        while(cruzamentoCritico1.available() == 0);
-
-                        mutexRegiao3.lock();
+                    if(x==490 && y==160){
 
                     }
 
-                    if(x==355 && y==150){
-                        waitRegiao3.wakeAll();
-                        mutexRegiao3.unlock();
+                    if(x==440 && y==160){ //
+
                     }
 
-                    if(x==475 && y==170){
-                        deadlock3.release(1);
-                        deadLock1.release(1);
-                        cruzamentoCritico1.release(1);
+                    if(x==590 && y==180){
+
                     }
 
-                    if (x < 590 && y == 160){
+                    if(x==570 && y==160){ //
+
+                    }
+
+                    if(x==570 && y==280){
+
+                    }
+
+                    if(x==340 && y==280){ //
+
+                    }
+
+                    if(x==340 && y==160){
+
+                    }
+
+                    if (x < 590 && y == 160){ ///////////
                         x+=10;
                     }
                     else if (x == 590 && y < 280){
@@ -270,52 +190,23 @@ void Trem::run(){
 
 
                 case 5: //Trem 5
-                    if(x==495 && y==270){
-                        deadlock3.tryAcquire(1);
-                        while(deadlock3.available() == 0);
+                    if(x==590 && y==180){ //
 
-                        deadlock2.tryAcquire(1);
-                        while(deadlock2.available() == 0);
-
-                        deadLock1.tryAcquire(1);
-                        while(deadLock1.available() == 0);
-
-                        cruzamentoCritico3.tryAcquire(1);
-                        while(cruzamentoCritico3.available() == 0);
-                        mutexRegiao7.lock();
                     }
 
-                    if(x==505 && y==150){
-                        deadlock3.release(1);
-                        deadlock2.release(1);
-                        deadLock1.release(1);
-                        cruzamentoCritico3.release(1);
-                        waitRegiao7.wakeAll();
-                        mutexRegiao7.unlock();
+                    if(x==760 && y==160){
+
                     }
 
-                    if(x==575 && y==150){
-                        mutexRegiao6.lock();
+                    if(x==610 && y==280){ //
+
                     }
 
-                    if(x==745 && y==170){
-                        waitRegiao6.wakeAll();
-                        mutexRegiao6.unlock();
+                    if(x==610 && y==160){
+
                     }
 
-                    if(x==475 && y==170){
-                        cruzamentoCritico2.tryAcquire(1);
-                        while(cruzamentoCritico2.available() == 0);
-                        mutexRegiao5.lock();
-                    }
-
-                    if(x==625 && y==150){
-                        cruzamentoCritico2.release(1);
-                        waitRegiao5.wakeAll();
-                        mutexRegiao5.unlock();
-                    }
-
-                    if (x < 860 && y == 160){
+                    if (x < 860 && y == 160){ ////////////
                         x+=10;
                     }
                     else if (x == 860 && y < 280){
