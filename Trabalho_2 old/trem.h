@@ -17,7 +17,7 @@ public:
     Trem(int,int,int);  //construtor
     void run();         //função a ser executada pela thread
     void set_velocidade(int valor);
-    void inicializa_semaforos();
+
 //Cria um sinal
 signals:
     void updateGUI(int,int,int);
