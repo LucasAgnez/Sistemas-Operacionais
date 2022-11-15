@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     trem4 = new Trem(4,590,280);
     trem5 = new Trem(5,860,280);
 
+    trem1->inicializa_semaforos();
+
     /*
      * Conecta o sinal UPDATEGUI à função UPDATEINTERFACE.
      * Ou seja, sempre que o sinal UPDATEGUI foi chamado, será executada a função UPDATEINTERFACE.
