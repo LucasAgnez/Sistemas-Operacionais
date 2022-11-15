@@ -120,7 +120,7 @@ void Trem::run(){
                         mutex[3].lock();
                     }
 
-                    if(x==470 && y==130){ //depois regiao3
+                    if(x==470 && y==140){ //depois regiao3
                         sem2[1].release(1);
                         sem2[0].release(1);
                         sem[0].release(1);
@@ -238,7 +238,7 @@ void Trem::run(){
                         mutex[5].lock();
                     }
 
-                    if(x==350 && y==280){ // depois regiao5
+                    if(x==340 && y==160){ // depois regiao5
                         sem2[1].release(1);
                         sem[2].release(1);
                         mutex[5].unlock();

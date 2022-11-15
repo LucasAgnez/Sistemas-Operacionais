@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label_trem3">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>270</y>
+      <x>320</x>
+      <y>280</y>
       <width>21</width>
       <height>17</height>
      </rect>
@@ -27,7 +27,7 @@
      <string notr="true">QLabel { background: blue}</string>
     </property>
     <property name="text">
-     <string>T1</string>
+     <string>3</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho3N">
@@ -145,8 +145,8 @@
    <widget class="QLabel" name="label_trem4">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>180</y>
+      <x>590</x>
+      <y>280</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -155,7 +155,7 @@
      <string notr="true">QLabel { background: red}</string>
     </property>
     <property name="text">
-     <string>T2</string>
+     <string>4</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trilho5N">
@@ -299,14 +299,14 @@
      <string notr="true">QLabel { background: green}</string>
     </property>
     <property name="text">
-     <string>T3</string>
+     <string>5</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trem1">
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>90</y>
+      <y>160</y>
       <width>21</width>
       <height>17</height>
      </rect>
@@ -315,7 +315,7 @@
      <string notr="true">QLabel { background: purple}</string>
     </property>
     <property name="text">
-     <string>T4</string>
+     <string>1</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_trem2">
@@ -331,7 +331,7 @@
      <string notr="true">QLabel { background: orange}</string>
     </property>
     <property name="text">
-     <string>T5</string>
+     <string>2</string>
     </property>
    </widget>
    <widget class="QSlider" name="velocidade3">
